@@ -21,7 +21,7 @@ export default function Example() {
     {
       name: "Home",
       href: "#",
-      target: "/home#home",
+      target: "#home",
       current: true,
       visible: true,
       onClick: null,
@@ -45,20 +45,20 @@ export default function Example() {
     },
     {
       name: "Projects",
-      target: "/home#projects",
+      target: "#projects",
       current: false,
       visible: true
     },
     {
       name: "Playground",
-      target: "/home#playground",
+      target: "#playground",
       current: false,
       visible: true
     },
     {
       name: "About Me",
       target: "/home#about",
-      href: "home#about",
+      href: "#about",
       current: false,
       visible: true,
       onClick: null,
@@ -66,13 +66,13 @@ export default function Example() {
     {
       name: "CV",
       target: "/home#CV",
-      href:"home#CV",
+      href:"#CV",
       current: false,
       visible: true
     },
     {
       name: "Contact",
-      target: "/home#contact",
+      target: "#contact",
       current: false,
       visible: true
     }

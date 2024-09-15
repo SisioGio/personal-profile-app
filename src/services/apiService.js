@@ -1,8 +1,9 @@
 import api from "./api";
 import  {jwtDecode} from 'jwt-decode';
+const baseUrl =   "https://h0x7fb38l3.execute-api.eu-central-1.amazonaws.com/Prod"
 class ApiService {
 
-
+  
   getUserFromToken(){
     const token= this.getLocalAccessToken()
     const decodedToken = jwtDecode(token);
@@ -11,7 +12,7 @@ class ApiService {
   }
   signin(email, password) {
     return api
-      .post("/user/login", {
+      .post(baseUrl+"/user/login", {
         email:email,
         password:password,
       })
@@ -60,7 +61,7 @@ class ApiService {
      return api.get("/inventory")
   }
   sendMessageToChat(messages,role,role_description,role_task){
-    return api.post("/bedrock/chat",{
+    return api.post(baseUrl+"/bedrock/chat",{
       "messages":messages,
       'role':role,
       'role_description':role_description,
