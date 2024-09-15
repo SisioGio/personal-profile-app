@@ -14,6 +14,8 @@ function Playground() {
       <h1 className="text-center text-5xl text-blue-900">
         Let's have some fun now...
       </h1>
+
+      
       {user ? (
         <>
           <h1 className="text-blue-900 text-3xl text-center py-5">

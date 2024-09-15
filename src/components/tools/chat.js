@@ -56,6 +56,7 @@ function Chat({ role, description, task, setSelected, input, default_prompt }) {
       'role_description':description,
       'role_task':  newTask
         
+      
       }
         
       );
@@ -147,7 +148,7 @@ function Chat({ role, description, task, setSelected, input, default_prompt }) {
             />
           ) : (
             <>
-              <div className="flex-1 p-4 bg-white rounded-lg min-h-[60vh] max-h-[calc(100vh-300px)]  overflow-h-scroll">
+              <div className="flex-1 p-4 bg-white rounded-lg min-h-[60vh] max-h-[calc(100vh-300px)]  overflow-y-scroll">
                 <div className="flex flex-col h-full max-h-full">
                   {messages.map((msg, index) => (
                     <div
