@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install --force
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Compiling the React app...
+      - npm run build
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Uploading to S3...
+      - aws s3 sync build/ s3://ag-digitalexpert.com --delete
+artifacts:
+  files:
+    - '**/*'
+  base-directory: build
