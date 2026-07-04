@@ -1,0 +1,72 @@
+name: Deploy Website to S3
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - public/**
+      - src/**
+      - package.json
+      - package-lock.json
+      - tailwind.config.js
+      - postcss.config.js
+      - .env
+      - .github/workflows/deploy-website-s3.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-website-s3
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION || 'eu-central-1' }}
+      S3_BUCKET: alessiogiovannini.com
+      REACT_APP_BEDROCK_ENDPOINT: ${{ vars.REACT_APP_BEDROCK_ENDPOINT || 'https://664xui6bqd.execute-api.eu-central-1.amazonaws.com' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy static assets
+        run: |
+          aws s3 sync build/ "s3://$S3_BUCKET" \
+            --delete \
+            --cache-control "public,max-age=31536000,immutable" \
+            --exclude "index.html" \
+            --exclude "asset-manifest.json" \
+            --exclude "manifest.json"
+
+      - name: Deploy entry files
+        run: |
+          aws s3 sync build/ "s3://$S3_BUCKET" \
+            --cache-control "no-cache,no-store,must-revalidate" \
+            --exclude "*" \
+            --include "index.html" \
+            --include "asset-manifest.json" \
+            --include "manifest.json"
