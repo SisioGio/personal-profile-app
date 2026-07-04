@@ -14,6 +14,7 @@ const ProfileAgentChat = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
+  const [chatHeight, setChatHeight] = useState(null);
   const messagesEndRef = useRef(null);
   const [messages, setMessages] = useState([
     {
@@ -34,6 +35,21 @@ const ProfileAgentChat = () => {
 
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading, open]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const setStableChatHeight = () => {
+      setChatHeight(`${window.innerHeight - 24}px`);
+    };
+
+    setStableChatHeight();
+    window.addEventListener("orientationchange", setStableChatHeight);
+
+    return () => {
+      window.removeEventListener("orientationchange", setStableChatHeight);
+    };
+  }, [open]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -75,9 +91,18 @@ const ProfileAgentChat = () => {
   };
 
   return (
-    <div className="fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] z-50 flex flex-col items-end sm:inset-x-auto sm:bottom-5 sm:right-5">
+    <div
+      className={`fixed inset-x-3 z-50 flex flex-col items-end sm:inset-x-auto sm:right-5 ${
+        open
+          ? "top-3 sm:bottom-5 sm:top-auto"
+          : "bottom-[calc(env(safe-area-inset-bottom)+0.75rem)]"
+      }`}
+    >
       {open && (
-        <div className="flex h-[calc(100dvh-1.5rem)] w-full flex-col overflow-hidden rounded-[28px] border border-white/15 bg-slate-950 text-white shadow-[0_24px_80px_rgba(2,6,23,0.45)] sm:h-[620px] sm:max-h-[680px] sm:w-[410px]">
+        <div
+          className="flex w-full flex-col overflow-hidden rounded-[28px] border border-white/15 bg-slate-950 text-white shadow-[0_24px_80px_rgba(2,6,23,0.45)] sm:h-[620px] sm:max-h-[680px] sm:w-[410px]"
+          style={{ height: chatHeight || "calc(100svh - 1.5rem)" }}
+        >
           <div className="relative overflow-hidden border-b border-white/10 bg-slate-950 px-4 pb-4 pt-4">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.28),transparent_36%),radial-gradient(circle_at_85%_10%,rgba(56,189,248,0.18),transparent_38%)]" />
             <div className="relative flex items-start justify-between gap-3">
