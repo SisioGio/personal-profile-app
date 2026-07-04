@@ -273,6 +273,18 @@ export class AgentCoreStack extends Stack {
       });
 
       environment.runtime.grantInvoke(proxy);
+      proxy.addToRolePolicy(
+        new iam.PolicyStatement({
+          actions: [
+            'bedrock-agentcore:InvokeAgentRuntime',
+            'bedrock-agentcore:InvokeAgentRuntimeForUser',
+          ],
+          resources: [
+            environment.runtime.runtimeArn,
+            `${environment.runtime.runtimeArn}/runtime-endpoint/*`,
+          ],
+        })
+      );
 
       const api = new apigwv2.HttpApi(this, `${toCdkId(agentName)}HttpApi`, {
         apiName: `${spec.name}-${agentName}-api`,
