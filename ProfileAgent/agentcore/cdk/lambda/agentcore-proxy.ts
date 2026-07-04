@@ -13,15 +13,6 @@ const runtimeArn = process.env.AGENTCORE_RUNTIME_ARN;
 const maxMessages = Number(process.env.MAX_MESSAGES ?? '12');
 const maxUserMessageLength = Number(process.env.MAX_USER_MESSAGE_LENGTH ?? '700');
 
-const refusalMessage =
-  "I can only answer questions about Alessio, his projects, skills, certifications, experience, and ways to contact or work with him.";
-
-const allowedTopicPattern =
-  /\b(alessio|giovannini|portfolio|profile|project|projects|skill|skills|experience|certification|certifications|certificate|background|education|work|career|contact|hire|cv|resume|expertise|ai|llm|agent|agents|automation|rpa|uipath|power automate|aws|bedrock|lambda|textract|cloud|serverless|vector|rag|knowledge base|document|documents|extraction|ocr|chatbot|teams|sap|reporting|emailifit|docaiextractor|agents4people|storaro|nft|solidity|livekit|nova sonic)\b/i;
-
-const greetingPattern =
-  /^(hi|hello|hey|ciao|good morning|good afternoon|good evening|who are you|help|what can you do)[\s?.!]*$/i;
-
 const corsHeaders = {
   'access-control-allow-origin': process.env.CORS_ALLOW_ORIGIN ?? '*',
   'access-control-allow-headers': 'content-type,authorization,x-session-id',
@@ -134,14 +125,6 @@ function getLatestUserMessage(messages: Array<Record<string, unknown>>): string 
   return '';
 }
 
-function isAllowedProfileQuestion(text: string): boolean {
-  const normalized = text.trim();
-  return (
-    normalized.length > 0 &&
-    (greetingPattern.test(normalized) || allowedTopicPattern.test(normalized))
-  );
-}
-
 function sanitizePayload(body: Record<string, unknown>): Record<string, unknown> {
   const messages = getMessages(body);
   const limitedMessages = messages.slice(-maxMessages).map((message) => {
@@ -195,10 +178,6 @@ export async function handler(
         413,
         `Please keep questions under ${maxUserMessageLength} characters.`
       );
-    }
-
-    if (!isAllowedProfileQuestion(latestUserMessage)) {
-      return response(200, refusalMessage);
     }
 
     const sanitizedBody = sanitizePayload(body);
