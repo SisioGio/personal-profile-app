@@ -1,0 +1,120 @@
+name: Deploy AgentCore Profile Agent
+
+on:
+  workflow_dispatch:
+    inputs:
+      aws_region:
+        description: AWS region for the AgentCore deployment
+        required: true
+        default: eu-central-1
+      smoke_prompt:
+        description: Prompt used after deployment to smoke test the agent
+        required: true
+        default: Say hello and summarize Alessio in one sentence.
+  push:
+    branches:
+      - main
+    paths:
+      - ProfileAgent/**
+      - .github/workflows/deploy-agentcore.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-agentcore-profile-agent
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: ${{ github.event.inputs.aws_region || vars.AWS_REGION || 'eu-central-1' }}
+      SMOKE_PROMPT: ${{ github.event.inputs.smoke_prompt || 'Say hello and summarize Alessio in one sentence.' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install AgentCore CLI
+        run: npm install --global @aws/agentcore aws-cdk
+
+      - name: Install AgentCore CDK dependencies
+        working-directory: ProfileAgent/agentcore/cdk
+        run: npm ci
+
+      - name: Configure AgentCore deploy target
+        working-directory: ProfileAgent
+        run: |
+          ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
+          cat > agentcore/aws-targets.json <<EOF
+          [
+            {
+              "name": "default",
+              "description": "GitHub Actions deployment target",
+              "account": "$ACCOUNT_ID",
+              "region": "$AWS_REGION"
+            }
+          ]
+          EOF
+
+      - name: Validate AgentCore project
+        working-directory: ProfileAgent
+        run: agentcore validate
+
+      - name: Deploy AgentCore project
+        working-directory: ProfileAgent
+        run: agentcore deploy --target default --yes --verbose
+
+      - name: Show AgentCore status
+        working-directory: ProfileAgent
+        run: agentcore status --target default
+
+      - name: Smoke test deployed agent
+        working-directory: ProfileAgent
+        run: agentcore invoke --target default "$SMOKE_PROMPT"
+
+      - name: Smoke test API Gateway bridge
+        run: |
+          CHAT_URL="$(aws cloudformation describe-stacks \
+            --stack-name AgentCore-ProfileAgent-default \
+            --query "Stacks[0].Outputs[?OutputKey=='ProfileAgentAgentChatUrl'].OutputValue | [0]" \
+            --output text)"
+
+          echo "Agent API chat URL: $CHAT_URL" >> "$GITHUB_STEP_SUMMARY"
+
+          python - <<'PY'
+          import json
+          import os
+
+          with open("payload.json", "w", encoding="utf-8") as f:
+              json.dump(
+                  {"messages": [{"role": "user", "message": os.environ["SMOKE_PROMPT"]}]},
+                  f,
+              )
+          PY
+
+          curl --fail --silent --show-error \
+            --request POST "$CHAT_URL" \
+            --header "content-type: application/json" \
+            --data @payload.json

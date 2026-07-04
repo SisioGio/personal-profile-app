@@ -1,6 +1,6 @@
 import api from "./api";
 import  {jwtDecode} from 'jwt-decode';
-const baseUrl =   "https://h0x7fb38l3.execute-api.eu-central-1.amazonaws.com/Prod"
+const baseUrl =  process.env.REACT_APP_BEDROCK_ENDPOINT || "http://127.0.0.1:8000"
 class ApiService {
 
   

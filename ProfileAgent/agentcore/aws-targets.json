@@ -1,0 +1,8 @@
+[
+  {
+    "name": "default",
+    "description": "Placeholder target for local validation. GitHub Actions overwrites this with the real AWS account and region before deployment.",
+    "account": "123456789012",
+    "region": "eu-central-1"
+  }
+]

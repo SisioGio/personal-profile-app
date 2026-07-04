@@ -1,9 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import apiService from "../../services/apiService";
-import { UserContext } from "./../userContext";
 import { FaTimes } from "react-icons/fa";
 import ChatConfigurator from "./chatConfigurator";
-import axios from "axios";
 
 function Chat({ role, description, task, setSelected, input, default_prompt }) {
 
@@ -50,15 +48,11 @@ function Chat({ role, description, task, setSelected, input, default_prompt }) {
 
     // Call the API with the updated messages
     try {
-      const response = await axios.post("https://h0x7fb38l3.execute-api.eu-central-1.amazonaws.com/Prod/bedrock/chat",{
-       "messages":updatedMessages,
-      'role':role,
-      'role_description':description,
-      'role_task':  newTask
-        
-      
-      }
-        
+      const response = await apiService.sendMessageToChat(
+        updatedMessages,
+        role,
+        description,
+        newTask
       );
       const genAiMessage = { role: "you", message: response.data };
       updatedMessages = [...updatedMessages, genAiMessage];
@@ -100,15 +94,12 @@ function Chat({ role, description, task, setSelected, input, default_prompt }) {
     console.log(newTask);
     // Call the API with the updated messages
     try {
-      const response = await axios.post("https://h0x7fb38l3.execute-api.eu-central-1.amazonaws.com/Prod/bedrock/chat",{
-        "messages":updatedMessages,
-       'role':role,
-       'role_description':description,
-       'role_task':  newTask
-         
-       }
-         
-       );
+      const response = await apiService.sendMessageToChat(
+        updatedMessages,
+        role,
+        description,
+        newTask
+      );
       
       const genAiMessage = { role: "you", message: response.data };
       updatedMessages = [...updatedMessages, genAiMessage];
