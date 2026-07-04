@@ -10,6 +10,17 @@ import { randomUUID } from 'crypto';
 
 const client = new BedrockAgentCoreClient({});
 const runtimeArn = process.env.AGENTCORE_RUNTIME_ARN;
+const maxMessages = Number(process.env.MAX_MESSAGES ?? '12');
+const maxUserMessageLength = Number(process.env.MAX_USER_MESSAGE_LENGTH ?? '700');
+
+const refusalMessage =
+  "I can only answer questions about Alessio, his projects, skills, certifications, experience, and ways to contact or work with him.";
+
+const allowedTopicPattern =
+  /\b(alessio|giovannini|portfolio|profile|project|projects|skill|skills|experience|certification|certifications|certificate|background|education|work|career|contact|hire|cv|resume|expertise|ai|llm|agent|agents|automation|rpa|uipath|power automate|aws|bedrock|lambda|textract|cloud|serverless|vector|rag|knowledge base|document|documents|extraction|ocr|chatbot|teams|sap|reporting|emailifit|docaiextractor|agents4people|storaro|nft|solidity|livekit|nova sonic)\b/i;
+
+const greetingPattern =
+  /^(hi|hello|hey|ciao|good morning|good afternoon|good evening|who are you|help|what can you do)[\s?.!]*$/i;
 
 const corsHeaders = {
   'access-control-allow-origin': process.env.CORS_ALLOW_ORIGIN ?? '*',
@@ -84,6 +95,74 @@ async function collectAgentResponse(agentResponse: Awaited<ReturnType<typeof cli
   return raw;
 }
 
+function normalizeMessageText(value: unknown): string {
+  if (typeof value === 'string') {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => {
+        if (typeof item === 'string') return item;
+        if (item && typeof item === 'object' && 'text' in item) {
+          return String((item as { text?: unknown }).text ?? '');
+        }
+        return '';
+      })
+      .join(' ');
+  }
+
+  return '';
+}
+
+function getMessages(body: Record<string, unknown>): Array<Record<string, unknown>> {
+  return Array.isArray(body.messages)
+    ? body.messages.filter((message): message is Record<string, unknown> => {
+        return !!message && typeof message === 'object';
+      })
+    : [];
+}
+
+function getLatestUserMessage(messages: Array<Record<string, unknown>>): string {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+    if (message.role === 'user') {
+      return normalizeMessageText(message.message ?? message.content).trim();
+    }
+  }
+
+  return '';
+}
+
+function isAllowedProfileQuestion(text: string): boolean {
+  const normalized = text.trim();
+  return (
+    normalized.length > 0 &&
+    (greetingPattern.test(normalized) || allowedTopicPattern.test(normalized))
+  );
+}
+
+function sanitizePayload(body: Record<string, unknown>): Record<string, unknown> {
+  const messages = getMessages(body);
+  const limitedMessages = messages.slice(-maxMessages).map((message) => {
+    const text = normalizeMessageText(message.message ?? message.content).slice(
+      0,
+      maxUserMessageLength
+    );
+
+    return {
+      ...message,
+      message: text,
+      content: undefined,
+    };
+  });
+
+  return {
+    ...body,
+    messages: limitedMessages,
+  };
+}
+
 export async function handler(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyStructuredResultV2> {
@@ -104,6 +183,25 @@ export async function handler(
     }
 
     const body = payload as Record<string, unknown>;
+    const messages = getMessages(body);
+    const latestUserMessage = getLatestUserMessage(messages);
+
+    if (!latestUserMessage) {
+      return response(400, 'A user message is required.');
+    }
+
+    if (latestUserMessage.length > maxUserMessageLength) {
+      return response(
+        413,
+        `Please keep questions under ${maxUserMessageLength} characters.`
+      );
+    }
+
+    if (!isAllowedProfileQuestion(latestUserMessage)) {
+      return response(200, refusalMessage);
+    }
+
+    const sanitizedBody = sanitizePayload(body);
     const sessionId =
       event.headers['x-session-id'] ??
       event.headers['X-Session-Id'] ??
@@ -117,7 +215,7 @@ export async function handler(
         qualifier: 'DEFAULT',
         contentType: 'application/json',
         accept: 'text/event-stream',
-        payload: Buffer.from(JSON.stringify(body)),
+        payload: Buffer.from(JSON.stringify(sanitizedBody)),
       })
     );
 

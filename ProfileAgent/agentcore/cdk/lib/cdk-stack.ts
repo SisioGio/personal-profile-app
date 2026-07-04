@@ -262,6 +262,7 @@ export class AgentCoreStack extends Stack {
         runtime: lambda.Runtime.NODEJS_20_X,
         timeout: Duration.seconds(29),
         memorySize: 256,
+        reservedConcurrentExecutions: 5,
         bundling: {
           minify: true,
           sourceMap: false,
@@ -269,6 +270,8 @@ export class AgentCoreStack extends Stack {
         environment: {
           AGENTCORE_RUNTIME_ARN: environment.runtime.runtimeArn,
           CORS_ALLOW_ORIGIN: '*',
+          MAX_MESSAGES: '12',
+          MAX_USER_MESSAGE_LENGTH: '700',
         },
       });
 
@@ -297,6 +300,14 @@ export class AgentCoreStack extends Stack {
           allowOrigins: ['*'],
         },
       });
+
+      const defaultStage = api.defaultStage?.node.defaultChild as apigwv2.CfnStage | undefined;
+      if (defaultStage) {
+        defaultStage.defaultRouteSettings = {
+          throttlingBurstLimit: 5,
+          throttlingRateLimit: 1,
+        };
+      }
 
       const integration = new integrations.HttpLambdaIntegration(
         `${toCdkId(agentName)}AgentCoreProxyIntegration`,
