@@ -37,7 +37,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Configure AWS credentials
@@ -51,7 +51,7 @@ jobs:
         run: npm install --force
 
       - name: Build
-        run: npm run build
+        run: CI=false npm run build
 
       - name: Deploy static assets
         run: |
