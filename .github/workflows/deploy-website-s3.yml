@@ -1,5 +1,7 @@
 name: Deploy Website to S3
 
+# Pushes to this workflow file trigger a fresh website deployment.
+
 on:
   workflow_dispatch:
   push:
