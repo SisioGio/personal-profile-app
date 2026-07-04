@@ -10,6 +10,7 @@ import CV from "./CV";
 import ContactForm from "../components/contactForm";
 import Contact from "./contact";
 import PlaygroundProfile from "./playground";
+import ProfileAgentChat from "./profileAgentChat";
 const ProfileHome = () => (
 
   <>
@@ -17,6 +18,7 @@ const ProfileHome = () => (
 
   <Expertise/>
   <Familiarities/>
+  <ProfileAgentChat/>
   <Projects/>
   <PlaygroundProfile/>
   <About/>
