@@ -18,12 +18,12 @@ const ProfileHome = () => (
 
   <Expertise/>
   <Familiarities/>
-  <ProfileAgentChat/>
   <Projects/>
   <PlaygroundProfile/>
   <About/>
   <CV/>
   <Contact/>
+  <ProfileAgentChat/>
   </>
 );
 
