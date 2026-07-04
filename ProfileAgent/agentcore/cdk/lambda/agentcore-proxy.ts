@@ -53,19 +53,11 @@ function extractTextFromEventData(data: string): string {
 }
 
 async function collectAgentResponse(agentResponse: Awaited<ReturnType<typeof client.send>>) {
-  const decoder = new TextDecoder();
-  const chunks: string[] = [];
-
   if (!agentResponse.response) {
     return '';
   }
 
-  for await (const chunk of agentResponse.response) {
-    chunks.push(decoder.decode(chunk, { stream: true }));
-  }
-  chunks.push(decoder.decode());
-
-  const raw = chunks.join('');
+  const raw = await agentResponse.response.transformToString();
   if (!raw) {
     return '';
   }
@@ -95,36 +87,60 @@ async function collectAgentResponse(agentResponse: Awaited<ReturnType<typeof cli
 export async function handler(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyStructuredResultV2> {
-  if (event.requestContext.http.method === 'OPTIONS') {
-    return response(204, '');
-  }
-
-  if (!runtimeArn) {
-    return response(500, 'AGENTCORE_RUNTIME_ARN is not configured.');
-  }
-
-  let payload: unknown;
   try {
-    payload = event.body ? JSON.parse(event.body) : {};
-  } catch {
-    return response(400, 'Request body must be valid JSON.');
+    if (event.requestContext.http.method === 'OPTIONS') {
+      return response(204, '');
+    }
+
+    if (!runtimeArn) {
+      return response(500, 'AGENTCORE_RUNTIME_ARN is not configured.');
+    }
+
+    let payload: unknown;
+    try {
+      payload = event.body ? JSON.parse(event.body) : {};
+    } catch {
+      return response(400, 'Request body must be valid JSON.');
+    }
+
+    const body = payload as Record<string, unknown>;
+    const sessionId =
+      event.headers['x-session-id'] ??
+      event.headers['X-Session-Id'] ??
+      (typeof body.sessionId === 'string' ? body.sessionId : undefined) ??
+      randomUUID();
+
+    const invokeResponse = await client.send(
+      new InvokeAgentRuntimeCommand({
+        agentRuntimeArn: runtimeArn,
+        runtimeSessionId: sessionId,
+        qualifier: 'DEFAULT',
+        contentType: 'application/json',
+        accept: 'text/event-stream',
+        payload: Buffer.from(JSON.stringify(body)),
+      })
+    );
+
+    const text = await collectAgentResponse(invokeResponse);
+    return response(200, text);
+  } catch (error) {
+    console.error('AgentCore proxy failed', error);
+
+    const err = error as {
+      name?: string;
+      message?: string;
+      $metadata?: { httpStatusCode?: number; requestId?: string };
+    };
+
+    return response(
+      500,
+      JSON.stringify({
+        error: err.name ?? 'AgentCoreProxyError',
+        message: err.message ?? String(error),
+        requestId: err.$metadata?.requestId,
+        statusCode: err.$metadata?.httpStatusCode,
+      }),
+      'application/json'
+    );
   }
-
-  const body = payload as Record<string, unknown>;
-  const sessionId =
-    event.headers['x-session-id'] ??
-    event.headers['X-Session-Id'] ??
-    (typeof body.sessionId === 'string' ? body.sessionId : undefined) ??
-    randomUUID();
-
-  const invokeResponse = await client.send(
-    new InvokeAgentRuntimeCommand({
-      agentRuntimeArn: runtimeArn,
-      runtimeSessionId: sessionId,
-      payload: new TextEncoder().encode(JSON.stringify(body)),
-    })
-  );
-
-  const text = await collectAgentResponse(invokeResponse);
-  return response(200, text);
 }

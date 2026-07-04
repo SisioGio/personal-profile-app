@@ -114,7 +114,16 @@ jobs:
               )
           PY
 
-          curl --fail --silent --show-error \
+          HTTP_STATUS="$(curl --silent --show-error \
+            --write-out "%{http_code}" \
+            --output api-response.txt \
             --request POST "$CHAT_URL" \
             --header "content-type: application/json" \
-            --data @payload.json
+            --data @payload.json)"
+
+          cat api-response.txt
+
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "API Gateway smoke test failed with HTTP $HTTP_STATUS" >&2
+            exit 1
+          fi
