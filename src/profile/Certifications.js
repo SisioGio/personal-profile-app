@@ -19,6 +19,15 @@ const certifications = [
     title: "HackerRank RestAPI",
     link: "https://www.hackerrank.com/certificates/iframe/2f065991ce17",
   },
+  {
+    title: "AWS Certified Developer Associate (DVA-C02, CloudGuru)",
+  },
+  {
+    title: "Node.js Intermediate",
+  },
+  {
+    title: "Frontend Developer",
+  },
 ];
 
 const Certifications = () => {
@@ -45,7 +54,7 @@ const Certifications = () => {
                 <h3 className="text-cyan-400 font-semibold text-lg sm:text-xl lg:text-2xl mb-4">
                   {cert.title}
                 </h3>
-                {cert.link && (
+                {cert.link ? (
                   <a
                     href={cert.link}
                     target="_blank"
@@ -55,6 +64,8 @@ const Certifications = () => {
                     <ArrowTopRightOnSquareIcon className="h-4 w-4 mr-1" />
                     Verify Certificate
                   </a>
+                ) : (
+                  <span className="text-sm text-gray-400 mt-auto">Listed on CV</span>
                 )}
               </div>
             ))}

@@ -2,8 +2,41 @@ import React from "react";
 import Fade from "react-reveal/Fade";
 import useIsVisible from "./useIsVisible";
 
+const sections = [
+  {
+    title: "Background & Education",
+    content:
+      "I hold a B.Sc. in Computer Science from the Polish-Japanese Institute of Information Technology. Working while studying helped me build a practical, resilient way of learning and solving problems.",
+  },
+  {
+    title: "Automation Roots",
+    content:
+      "My path started in RPA and process automation. I have delivered finance, accounting, SAP-facing, administrative, and operational workflows with UiPath, Power Automate, M365, and reusable automation components.",
+  },
+  {
+    title: "Applied AI Engineering",
+    content:
+      "In recent years I moved deeper into LLM-based document processing, RAG, AI agents, AWS Bedrock, Azure OCR, prompt engineering, tool calling, and knowledge-base evaluation.",
+  },
+  {
+    title: "Backend & Cloud",
+    content:
+      "I build Python and JavaScript/Node.js services, REST APIs, asynchronous processing packages, serverless components, and cloud-native integrations that make AI systems reliable and maintainable.",
+  },
+  {
+    title: "Business Bridge",
+    content:
+      "I enjoy connecting prototypes to real business processes, documenting architectures clearly, reducing costs, and acting as a bridge between finance, IT, automation, and AI stakeholders.",
+  },
+  {
+    title: "Current Focus",
+    content:
+      "I am focused on production-grade automation delivery, maintainable workflows, operational reliability, document intelligence, RAG pipelines, and practical AI agents.",
+  },
+];
+
 const About = () => {
-  const [isVisible, ref] = useIsVisible();
+  const [, ref] = useIsVisible();
 
   return (
     <div
@@ -11,7 +44,6 @@ const About = () => {
       id="about"
       className="relative py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-black text-gray-200 overflow-hidden"
     >
-      {/* Background blobs */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-700/20 rounded-full filter blur-3xl animate-blob opacity-50 mix-blend-multiply"></div>
       <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-cyan-500/20 rounded-full filter blur-2xl animate-blob animation-delay-2000 opacity-50 mix-blend-multiply"></div>
 
@@ -24,40 +56,20 @@ const About = () => {
 
         <Fade bottom distance="50px">
           <p className="text-lg sm:text-xl leading-relaxed text-center">
-            Hello! I’m <span className="font-bold text-cyan-400">Alessio Giovannini</span>, born in 1998, passionate about transforming business challenges into smart IT solutions. With broad expertise in <span className="font-semibold text-indigo-400">automation, cloud technologies, and AI</span>, I rapidly learn new technologies and thrive in collaborative, constructive environments. I love tackling complex problems, exchanging ideas, and learning from more experienced colleagues. My work is deeply rooted in <span className="font-bold text-fuchsia-400">Generative AI, vector databases, and modern AI ecosystems</span>.
+            I am <span className="font-bold text-cyan-400">Alessio Giovannini</span>,
+            an <span className="font-semibold text-indigo-400">RPA / AI / Backend Developer</span>{" "}
+            based in Barcelona, with 5+ years of experience in automation,
+            backend work, and applied AI. I like the practical part of AI
+            engineering: taking an idea or prototype, connecting it to real
+            business processes, and making it reliable, maintainable, and
+            cost-effective enough to be useful in production.
           </p>
         </Fade>
 
-        {/* Section blocks */}
         <div className="space-y-12">
-          {[
-            {
-              title: "Background & Education",
-              content: "I hold a degree in Computer Science Engineering from the Polish-Japanese Institute of Information Technology. Balancing full-time work during my studies taught me how to manage multiple responsibilities and develop strong problem-solving skills.",
-            },
-            {
-              title: "Expertise in RPA",
-              content: "I specialize in Robotic Process Automation (RPA), transforming manual, repetitive processes into automated workflows. My solutions improve efficiency, reduce costs, and increase productivity.",
-            },
-            {
-              title: "AWS & Serverless Solutions",
-              content: "Using AWS cloud services, I’ve built scalable, secure, and cost-effective serverless applications. For example, this website itself is cloud-native, showcasing real-world AWS integration skills.",
-            },
-            {
-              title: "Generative AI & Vector Databases",
-              content: "Generative AI is a key focus area for me. I design systems leveraging LLMs, vector databases, and AI ecosystems to extract knowledge, summarize data, and enable conversational AI solutions.",
-            },
-            {
-              title: "Problem Solving & Collaboration",
-              content: "I excel at translating business and use-case problems into IT solutions. I love collaborating with others to exchange ideas, learn from experienced professionals, and tackle challenging, constructive projects.",
-            },
-            {
-              title: "Explore My Work",
-              content: "Feel free to explore my portfolio to see projects in RPA, AI, cloud, and automation. I’m always seeking new challenges to innovate and drive digital transformation.",
-            },
-          ].map((section, index) => (
+          {sections.map((section, index) => (
             <Fade
-              key={index}
+              key={section.title}
               direction={index % 2 === 0 ? "left" : "right"}
               distance="50px"
             >

@@ -5,9 +5,9 @@ import apiService from "../services/apiService";
 const profileAgent = {
   role: "Ask Alessio AI",
   description:
-    "A profile assistant that answers questions about Alessio Giovannini, his skills, projects, certifications, and experience.",
+    "A profile assistant that answers questions about Alessio Giovannini, an RPA / AI / Backend Developer based in Barcelona with 5+ years of experience in automation, backend services, LLM document processing, RAG, AI agents, AWS Bedrock, and Python/JavaScript systems.",
   task:
-    "Help website visitors understand Alessio's background, expertise, projects, certifications, and professional profile. Be concise, accurate, and friendly.",
+    "Help website visitors understand Alessio's background, N26 and Oerlikon experience, applied AI expertise, projects, certifications, and professional profile. Be concise, accurate, and friendly.",
 };
 
 const ProfileAgentChat = () => {
@@ -20,14 +20,14 @@ const ProfileAgentChat = () => {
     {
       role: "you",
       message:
-        "Hi, I am Alessio's AI assistant. Ask me about his projects, skills, certifications, or experience.",
+        "Hi, I am Alessio's AI assistant. Ask me about his AI projects, automation work, backend skills, certifications, or experience.",
     },
   ]);
 
   const quickPrompts = [
-    "What projects is Alessio proud of?",
-    "Summarize Alessio's cloud skills.",
-    "Which certifications does Alessio have?",
+    "What is Alessio building at N26?",
+    "Summarize Alessio's AI and backend skills.",
+    "Which projects match his CV?",
   ];
 
   useEffect(() => {
