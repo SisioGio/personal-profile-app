@@ -1,38 +1,66 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-import Fade from "react-reveal/Fade";
 const Home = () => (
-  <div className="h-1/2 w-full " id="home">
-    <div className="mx-auto flex relative  flex-col text-blue-900 top-0  bg-blue-700 w-full  bg-opacity-80 items-center justify-center  overflow-hidden">
-      <video
-        autoPlay
-        loop
-        muted
-        className="absolute top-0 left-0 w-full  object-cover z-[-1] h-full">
-        <source
-          src="https://s3.eu-central-1.amazonaws.com/ag-digitalexpert.com/3129576-hd_1920_1080_30fps.mp4"
-          type="video/mp4"
-        />
-        Your browser does not support the video tag.
-      </video>
-      <div className="h-60"></div>
-      <Fade left>
-        <h3 className="mx-auto font-normal text-center line- text-white text-3xl  lg:text-4xl xl:text-7xl py-5 flex  flex-col lg:flex-row gap-5">
-        <span className="block text-3xl lg:text-4xl xl:text-5xl">Welcome to my</span>
-        <span className="block text-3xl lg:text-4xl xl:text-5xl">professional portfolio!</span>
-        </h3>
-      </Fade>
+  <section
+    id="home"
+    className="relative w-full h-screen overflow-hidden flex items-center justify-center text-center"
+  >
+    {/* Background gradient instead of video (lighter + faster) */}
+    <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-blue-950/70 to-black/90 z-[-1]" />
 
-      <Fade bottom distance="100px">
-        <p className="text-white   md:text-xl lg:text-3xl   leading-loose md:leading-loose lg:leading-loose tracking-wide lg:w-1/3 text-center">
-          <br></br>Dive in to explore my journey, expertise, and the innovative
-          solutions I've developed in the world of automation and cloud
-          technologies.
-        </p>
-      </Fade>
-      <div className="h-80"></div>
+    {/* Floating light accents */}
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute top-[25%] left-[15%] w-32 h-32 sm:w-44 sm:h-44 bg-cyan-400/20 blur-3xl animate-pulse rounded-full" />
+      <div className="absolute bottom-[20%] right-[10%] w-40 h-40 sm:w-52 sm:h-52 bg-fuchsia-400/25 blur-3xl animate-pulse delay-500 rounded-full" />
     </div>
-  </div>
-); 
+
+    {/* Content */}
+   <div className="relative px-6 sm:px-10 max-w-4xl flex flex-col items-center">
+  {/* Greeting */}
+  <motion.h1
+    initial={{ opacity: 0, y: 40 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 1 }}
+    className="text-white font-extrabold leading-tight text-[clamp(2rem,6vw,4.5rem)]"
+  >
+    <span className="block text-white/90 text-[clamp(1.2rem,3vw,1.75rem)] font-light mb-2">
+      👋 Hey there, I'm
+    </span>
+    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400 drop-shadow-lg">
+      Alessio Giovannini
+    </span>
+    <br />
+    <span className="text-white/80 text-[clamp(1rem,3vw,1.75rem)] mt-3 block font-medium">
+  Using <span className="text-cyan-300">AI</span>, <span className="text-indigo-300">RPA</span>, and{" "}
+  <span className="text-fuchsia-300">generative AI</span> to turn problems into intelligent solutions.
+</span>
+  </motion.h1>
+
+  {/* Subtitle / Tagline */}
+  <motion.p
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ delay: 0.8, duration: 1 }}
+    className="text-white/80 text-[clamp(1rem,2.5vw,1.25rem)] mt-6 leading-relaxed tracking-wide max-w-2xl"
+  >
+    I  automate processes, streamline work, and create intelligent systems that enhance productivity 
+    and turn everyday challenges into creative, efficient solutions.
+  </motion.p>
+
+  {/* Call to Action */}
+  <motion.a
+    href="#projects"
+    initial={{ opacity: 0, scale: 0.85 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ delay: 1.3, duration: 0.8 }}
+    className="mt-10 inline-block bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-white font-semibold px-10 py-4 rounded-full shadow-lg hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] hover:scale-105 transition-all text-[clamp(1rem,2.5vw,1.25rem)]"
+  >
+    Explore My Work 🚀
+  </motion.a>
+</div>
+
+  </section>
+);
 
 export default Home;

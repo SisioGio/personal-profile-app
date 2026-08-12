@@ -1,116 +1,79 @@
 import React from "react";
-import useIsVisible from "./useIsVisible";
 import Fade from "react-reveal/Fade";
+import useIsVisible from "./useIsVisible";
 
 const About = () => {
   const [isVisible, ref] = useIsVisible();
 
   return (
+    <div
+      ref={ref}
+      id="about"
+      className="relative py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-black text-gray-200 overflow-hidden"
+    >
+      {/* Background blobs */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-700/20 rounded-full filter blur-3xl animate-blob opacity-50 mix-blend-multiply"></div>
+      <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-cyan-500/20 rounded-full filter blur-2xl animate-blob animation-delay-2000 opacity-50 mix-blend-multiply"></div>
 
-    <div className="bg-white p-5 sm:p-6 lg:p-8 xl:p-10" id="about">
-    <div className="h-24"></div>
-    <div className="mx-auto space-y-12 max-w-6xl">
-      {/* Introduction Section */}
-      <section>
+      <div className="relative max-w-5xl mx-auto px-6 sm:px-12 space-y-16">
         <Fade top big>
-          <h5 className="text-blue-900 font-semibold text-2xl lg:text-4xl xl:text-5xl pb-10 leading-loose">
+          <h2 className="text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400 font-bold text-4xl sm:text-5xl lg:text-6xl">
             About Me
-          </h5>
+          </h2>
         </Fade>
-        <p className="text-lg leading-relaxed">
-          Hello! My name is{" "}
-          <span className="font-bold">Alessio Giovannini</span>, and I’m passionate about transforming business processes through automation, cloud technologies, and AI. Born in 1998, I specialize in Robotic Process Automation (RPA) and Generative AI to drive impactful digital transformations.
-        </p>
-      </section>
-  
-      {/* Background & Education Section */}
-      <Fade right>
-        <section>
-          <h3 className="text-blue-900 text-2xl lg:text-3xl font-semibold mb-3">
-            Background & Education
-          </h3>
-          <p className="text-lg leading-relaxed">
-            I hold a degree in{" "}
-            <span className="font-bold">Computer Science Engineering</span> from
-            the{" "}
-            <span className="font-bold">Polish-Japanese Institute of Information Technology</span>
-            . During my studies, I balanced a full-time job, which taught me how
-            to effectively manage multiple responsibilities and develop strong
-            problem-solving skills. This experience laid the foundation for my
-            career in technology.
+
+        <Fade bottom distance="50px">
+          <p className="text-lg sm:text-xl leading-relaxed text-center">
+            Hello! I’m <span className="font-bold text-cyan-400">Alessio Giovannini</span>, born in 1998, passionate about transforming business challenges into smart IT solutions. With broad expertise in <span className="font-semibold text-indigo-400">automation, cloud technologies, and AI</span>, I rapidly learn new technologies and thrive in collaborative, constructive environments. I love tackling complex problems, exchanging ideas, and learning from more experienced colleagues. My work is deeply rooted in <span className="font-bold text-fuchsia-400">Generative AI, vector databases, and modern AI ecosystems</span>.
           </p>
-        </section>
-      </Fade>
-  
-      {/* Expertise in RPA Section */}
-      <Fade left>
-        <section>
-          <h3 className="text-blue-900 text-2xl lg:text-3xl font-semibold mb-3">
-            Expertise in Robotic Process Automation (RPA)
-          </h3>
-          <p className="text-lg leading-relaxed">
-            I specialize in{" "}
-            <span className="font-bold">Robotic Process Automation (RPA)</span>,
-            helping businesses transform manual, repetitive processes into
-            automated workflows. Whether it's for back-office operations or
-            customer-facing systems, my solutions improve efficiency, reduce
-            costs, and increase productivity.
-          </p>
-        </section>
-      </Fade>
-  
-      {/* AWS & Serverless Solutions Section */}
-      <Fade right>
-        <section>
-          <h3 className="text-blue-900 text-2xl lg:text-3xl font-semibold mb-3">
-            AWS & Serverless Solutions
-          </h3>
-          <p className="text-lg leading-relaxed">
-            My expertise extends into the realm of{" "}
-            <span className="font-bold">AWS</span> cloud services. Using
-            serverless architecture, I’ve built scalable, secure, and
-            cost-effective solutions. For instance, this very website is powered
-            by AWS, highlighting my ability to create cloud-native applications
-            that address real-world challenges with agility and scalability.
-          </p>
-        </section>
-      </Fade>
-  
-      {/* Generative AI Integration Section */}
-      <Fade left>
-        <section>
-          <h3 className="text-blue-900 text-2xl lg:text-3xl font-semibold mb-3">
-            Generative AI Integration
-          </h3>
-          <p className="text-lg leading-relaxed">
-            One of my key areas of focus is{" "}
-            <span className="font-bold">Generative AI</span> and its ability to
-            revolutionize business processes. By integrating Generative AI with
-            AWS services, I help organizations unlock new capabilities, from
-            automating complex workflows to creating adaptive, AI-driven
-            systems. My goal is to continuously innovate and help companies
-            leverage AI to stay ahead in the digital landscape.
-          </p>
-        </section>
-      </Fade>
-  
-      {/* Call to Action Section */}
-      <Fade right>
-        <section>
-          <h3 className="text-blue-900 text-2xl lg:text-3xl font-semibold mb-3">
-            Explore My Work
-          </h3>
-          <p className="text-lg leading-relaxed">
-            Feel free to explore the website to learn more about my projects and
-            expertise in areas like RPA, AWS, and Generative AI. I am always
-            looking for opportunities to collaborate on exciting new challenges
-            and drive digital innovation.
-          </p>
-        </section>
-      </Fade>
+        </Fade>
+
+        {/* Section blocks */}
+        <div className="space-y-12">
+          {[
+            {
+              title: "Background & Education",
+              content: "I hold a degree in Computer Science Engineering from the Polish-Japanese Institute of Information Technology. Balancing full-time work during my studies taught me how to manage multiple responsibilities and develop strong problem-solving skills.",
+            },
+            {
+              title: "Expertise in RPA",
+              content: "I specialize in Robotic Process Automation (RPA), transforming manual, repetitive processes into automated workflows. My solutions improve efficiency, reduce costs, and increase productivity.",
+            },
+            {
+              title: "AWS & Serverless Solutions",
+              content: "Using AWS cloud services, I’ve built scalable, secure, and cost-effective serverless applications. For example, this website itself is cloud-native, showcasing real-world AWS integration skills.",
+            },
+            {
+              title: "Generative AI & Vector Databases",
+              content: "Generative AI is a key focus area for me. I design systems leveraging LLMs, vector databases, and AI ecosystems to extract knowledge, summarize data, and enable conversational AI solutions.",
+            },
+            {
+              title: "Problem Solving & Collaboration",
+              content: "I excel at translating business and use-case problems into IT solutions. I love collaborating with others to exchange ideas, learn from experienced professionals, and tackle challenging, constructive projects.",
+            },
+            {
+              title: "Explore My Work",
+              content: "Feel free to explore my portfolio to see projects in RPA, AI, cloud, and automation. I’m always seeking new challenges to innovate and drive digital transformation.",
+            },
+          ].map((section, index) => (
+            <Fade
+              key={index}
+              direction={index % 2 === 0 ? "left" : "right"}
+              distance="50px"
+            >
+              <div className="relative p-6 sm:p-8 bg-white/5 border border-cyan-500/20 backdrop-blur-md rounded-3xl shadow-lg hover:shadow-[0_0_30px_-5px_rgba(56,189,248,0.4)] transition-all duration-500">
+                <h3 className="text-cyan-400 text-2xl sm:text-3xl lg:text-4xl font-semibold mb-3">
+                  {section.title}
+                </h3>
+                <p className="text-gray-200 text-base sm:text-lg leading-relaxed">
+                  {section.content}
+                </p>
+              </div>
+            </Fade>
+          ))}
+        </div>
+      </div>
     </div>
-  </div>
-  
   );
 };
 

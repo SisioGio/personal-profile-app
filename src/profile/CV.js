@@ -1,94 +1,97 @@
 import React from "react";
-
 import Fade from "react-reveal/Fade";
+
 const experiences = [
   {
     role: "RPA & Low Code Developer",
     company: "Oerlikon Digital Hub",
-
-    location: "Munich,Germany",
+    location: "Munich, Germany",
     period: "August 2023 - Present",
-    description:
-      "As an RPA & Low Code Developer, I specialize in designing and implementing automated solutions that streamline business processes and enhance efficiency. Leveraging my extensive experience in accounting, finance, and reporting, I excel at converting complex business problems into practical, automated solutions. In my current role, I integrated Generative AI into UiPath, transforming a rule-based process into a smart, cost-effective solution. This innovation has significantly decreased operational costs while improving process accuracy and efficiency. My ability to find the best ideas and design well-crafted bots ensures that every solution I create is both effective and efficient.",
+    responsibilities: [
+  "Design and implement GenAI solutions for intelligent document processing using LLMs, including extraction, transformation, enrichment, and workflow automation.",
+  "Identify and implement solutions to reduce running costs and optimize existing processes.",
+  "Develop AI-driven automations and GenAI agents using cloud services (prompt engineering, AWS Bedrock, Azure AI Foundry).",
+  "Develop automation solutions with UiPath and Power Automate.",
+  "Analyze business processes for optimization and automation.",
+  "Evaluate and select low-code and AI tools based on requirements.",
+  "Build cloud-based applications and reusable libraries.",
+  "Integrate UiPath, M365, and LLM systems for advanced automation workflows.",
+  "Replace and improve legacy solutions.",
+  "Document AI-driven automations and guide colleagues on architecture, tool selection, and best practices.",
+]
   },
-
   {
     role: "Business Process Automation Consultant",
-    company:
-      "Oerlikon Business Services Sp.z o.o. / Oerlikon Balzers Coating Italy S.p.a (remote)",
-
-    location: "Warsaw,Poland / Milan,Italy (remote)",
-    period: "February 2021 - December 2021 / January 2022 - July 2023",
-    description:
-      "In my role as a Business Process Automation Consultant, I use my deep understanding of accounting, finance, and reporting to identify and automate key business processes. My expertise enables me to quickly understand business challenges and develop automated solutions that optimize workflow and enhance productivity. I am adept at designing and implementing automation strategies that are tailored to meet the specific needs of each business, always ensuring the best possible outcome.",
+    company: "Oerlikon Business Services / Oerlikon Balzers Coating Italy (remote)",
+    location: "Warsaw, Poland / Milan, Italy (remote)",
+    period: "Feb 2021 - July 2023",
+    responsibilities: [
+      "Identify key business processes for automation and optimization.",
+      "Design and implement RPA, low-code, and AI solutions tailored to business needs.",
+      "Optimize workflow efficiency and enhance productivity.",
+      "Ensure accuracy and compliance in automated processes.",
+      "Disclaimer: Already developing UiPath, Python, and M365 solutions during this period.",
+    ],
   },
-
   {
     role: "AP Accountant",
     company: "Oerlikon Business Services Sp.z o.o.",
-    location: "Warsaw,Poland",
-    period: "April 2019 - January 2021",
-    description:
-      "As an AP Accountant, I was responsible for managing accounts payable processes, ensuring accuracy and compliance in financial transactions. My experience in finance and reporting provided me with a strong foundation to identify inefficiencies and implement solutions that streamline operations. This role honed my ability to convert business problems into practical solutions, laying the groundwork for my future success in automation and process optimization.",
+    location: "Warsaw, Poland",
+    period: "April 2019 - Jan 2021",
+    responsibilities: [
+      "Manage accounts payable processes ensuring compliance and accuracy.",
+      "Identify inefficiencies and suggest process improvements.",
+      "Lay the foundation for automation initiatives in finance.",
+      "Disclaimer: Already developing UiPath, Python, and M365 solutions in parallel to accounting work.",
+    ],
   },
   {
     role: "Cash Collection Clerk",
     company: "Accenture",
-    location: "Warsaw,Poland",
-    period: "Ocotber 2017 - March 2019",
-    description:
-      "In my role as a Cash Collection Clerk, I managed cash collections and maintained accurate financial records. This position required a keen eye for detail and a deep understanding of financial processes. My experience in this role allowed me to identify and resolve issues efficiently, demonstrating my capability to design solutions that improve process efficiency and accuracy. My background in accounting and finance has been invaluable in developing my skills in automation and process optimization.",
+    location: "Warsaw, Poland",
+    period: "Oct 2017 - Mar 2019",
+    responsibilities: [
+      "Manage cash collections and maintain accurate financial records.",
+      "Identify and resolve process inefficiencies.",
+      "Develop attention to detail and understanding of financial processes.",
+    ],
   },
 ];
-const CV = () => (
-  <div className="bg-blue-800 text-white relative overflow-hidden" id='CV'>
-  {/* Top SVG for background wave */}
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute top-0 left-0 w-full h-auto">
-    <path
-      fill="white"
-      d="M0,160L48,160C96,160,192,160,288,149.3C384,139,480,117,576,122.7C672,128,768,160,864,160C960,160,1056,128,1152,122.7C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-    ></path>
-  </svg>
 
-  <div className="relative mx-auto w-full sm:w-5/6 xl:w-3/5 px-4 sm:px-6 lg:px-8 py-12 z-10">
-    <div className="h-24 md:h-56 lg:h-56"></div>
-    <Fade top distance="300px" >
-      <h2  className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl pb-10 text-center">
-        Professional Experience
-      </h2>
-    </Fade>
-    <div className="space-y-8">
-      <Fade right>
-        {experiences.map((experience, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-lg p-6 mb-6 transition-transform hover:scale-105 hover:shadow-2xl border border-indigo-200"
-          >
-            <h3 className="font-semibold text-2xl md:text-3xl text-blue-900 mb-2">
-              {experience.role}
-            </h3>
-            <p className="text-lg md:text-xl text-gray-700">{experience.company}</p>
-            <p className="text-base md:text-lg text-gray-500">
-              {experience.location} - {experience.period}
-            </p>
-            <p className="mt-4 text-gray-800 text-base md:text-lg leading-relaxed">
-              {experience.description}
-            </p>
-          </div>
-        ))}
-      </Fade>
+const CV = () => {
+  return (
+    <div className="bg-gradient-to-b from-slate-950 via-slate-900 to-black text-gray-200 relative overflow-hidden py-24" id="CV">
+      {/* Background blobs */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-700/20 rounded-full filter blur-3xl animate-blob opacity-50 mix-blend-multiply"></div>
+      <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-cyan-500/20 rounded-full filter blur-2xl animate-blob animation-delay-2000 opacity-50 mix-blend-multiply"></div>
+
+      <div className="relative max-w-5xl mx-auto px-6 sm:px-12 space-y-16 z-10">
+        <Fade top big>
+          <h2 className="text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400 font-bold text-4xl sm:text-5xl lg:text-6xl">
+            Professional Experience
+          </h2>
+        </Fade>
+
+        <div className="space-y-10 mt-12">
+          {experiences.map((exp, index) => (
+            <Fade key={index} left distance="50px">
+              <div className="relative border-l-4 border-cyan-500 pl-6 sm:pl-10 py-6">
+                <div className="absolute -left-2 sm:-left-3 top-6 w-4 h-4 bg-cyan-400 rounded-full"></div>
+                <h3 className="text-cyan-400 text-2xl sm:text-3xl lg:text-4xl font-semibold mb-1">{exp.role}</h3>
+                <p className="text-gray-200 text-lg sm:text-xl">{exp.company}</p>
+                <p className="text-gray-400 text-base sm:text-lg mb-4">{exp.location} - {exp.period}</p>
+                <ul className="list-disc list-inside text-gray-300 space-y-2">
+                  {exp.responsibilities.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </Fade>
+          ))}
+        </div>
+      </div>
     </div>
-  </div>
-  <div className="h-24 md:h-56 lg:h-56"></div>
-  {/* Bottom SVG for background wave */}
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute bottom-0 left-0 w-full h-auto">
-    <path
-      fill="black"
-      d="M0,160L48,160C96,160,192,160,288,149.3C384,139,480,117,576,122.7C672,128,768,160,864,160C960,160,1056,128,1152,122.7C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-    ></path>
-  </svg>
-</div>
-
-);
+  );
+};
 
 export default CV;

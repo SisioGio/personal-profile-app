@@ -3,172 +3,126 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import React, { useContext,useState,useEffect } from "react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "./userContext";
 import { Link } from "react-router-dom";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Navbar() {
   const { user, logoutUser } = useContext(UserContext);
+
   const clickLogOut = () => {
     logoutUser();
     window.location.reload();
   };
+
   const navigation = [
-    {
-      name: "Home",
-      href: "#",
-      target: "#home",
-      current: true,
-      visible: true,
-      onClick: null,
-    },
-
-   
+    { name: "Home", target: "#home", visible: true },
+    { name: "Expertise", target: "#expertise", visible: true },
+    { name: "Familiarities", target: "#familiarities", visible: true },
+    { name: "Projects", target: "#projects", visible: true },
+     { name: "Certifications", target: "#certifications", visible: true },
     
-    {
-      name: "Expertise",
-      target: "/home#expertise",
-      href: "#contact",
-      current: false,
-      visible: true
-    },
-    {
-      name: "Familiarities",
-      target: "/home#familiarities",
-      href: "#familiarties",
-      current: false,
-      visible: true
-    },
-    {
-      name: "Projects",
-      target: "#projects",
-      current: false,
-      visible: true
-    },
-    {
-      name: "Playground",
-      target: "#playground",
-      current: false,
-      visible: true
-    },
-    {
-      name: "About Me",
-      target: "/home#about",
-      href: "#about",
-      current: false,
-      visible: true,
-      onClick: null,
-    },
-    {
-      name: "CV",
-      target: "/home#CV",
-      href:"#CV",
-      current: false,
-      visible: true
-    },
-    {
-      name: "Contact",
-      target: "#contact",
-      current: false,
-      visible: true
-    }
+    { name: "About Me", target: "#about", visible: true },
+    { name: "CV", target: "#CV", visible: true },
+    { name: "Contact", target: "#contact", visible: true },
   ];
-  const [navbarColor, setNavbarColor] = useState(false);
-  // Function to handle scroll and change the navbar color
-  const changeNavbarColor = () => {
-    const homeSection = document.getElementById("home");
-    const homeSectionPosition = homeSection.getBoundingClientRect();
-    if (homeSectionPosition.bottom <=100) {
-      // If the scroll is greater than the home section height, change the navbar color
-      setNavbarColor(true);
-     
-    } else {
-     
-      setNavbarColor(false);
-    }
 
-    
+  const [navbarSolid, setNavbarSolid] = useState(false);
 
+  // Detect scroll and toggle background
+  const handleScroll = () => {
+    const home = document.getElementById("home");
+    if (!home) return;
+    const { bottom } = home.getBoundingClientRect();
+    setNavbarSolid(bottom <= 100);
   };
-  useEffect(() => {
-    window.addEventListener("scroll", changeNavbarColor);
 
-    return () => {
-      window.removeEventListener("scroll", changeNavbarColor);
-    };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-
   return (
-    <Disclosure as="nav" className={` fixed w-full z-40 ${navbarColor && "bg-blue-700"} h-24 `}>
-      <div className="mx-auto w-full px-2 sm:px-6 lg:px-8  flex-grow ">
-        <div className="relative flex h-24 items-center justify-between">
+    <Disclosure
+      as="nav"
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        navbarSolid
+          ? "backdrop-blur-md bg-blue-900/80 shadow-md"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div className="relative flex h-20 items-center justify-between">
+          {/* Mobile menu button */}
           <div className="absolute inset-y-0 right-0 flex items-center lg:hidden">
-            {/* Mobile menu button*/}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-              <span className="absolute -inset-0.5" />
-              <span className="sr-only">Open main menu</span>
+            <DisclosureButton className="group inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-400">
               <Bars3Icon
-                aria-hidden="true"
                 className="block h-6 w-6 group-data-[open]:hidden"
+                aria-hidden="true"
               />
               <XMarkIcon
-                aria-hidden="true"
                 className="hidden h-6 w-6 group-data-[open]:block"
+                aria-hidden="true"
               />
             </DisclosureButton>
           </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-around">
-            <div className="flex flex-shrink-0 items-center text-white text-3xl">
-             Alessio Giovannini
-            </div>
 
-            <div className="hidden  lg:block">
-              <div className="flex space-x-4">
-                {navigation.map((item) =>
-                  item.visible ? (
-                    <Link
-                      key={item.name}
-                      onClick={item.onClick}
-                      href={item.target}
-                      to={item.target}
-                      aria-current={item.current ? "page" : undefined}
-                      className={` text-white  font-light  rounded-md px-3 py-2 text-sm md:text-sm lg:text-xl  hover:text-gray-300`}
-                      >
-                      {item.name}
-                    </Link>
-                  ) : null
-                )}
-              </div>
-            </div>
+          {/* Brand */}
+          <div className="flex flex-1 items-center justify-center sm:justify-start">
+            <Link
+              to="#home"
+              className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300 font-bold text-2xl md:text-3xl tracking-tight"
+            >
+              Alessio Giovannini
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex lg:space-x-8">
+            {navigation.map(
+              (item) =>
+                item.visible && (
+                  <Link
+                    key={item.name}
+                    to={item.target}
+                    className="text-white text-lg font-light hover:text-indigo-300 transition-colors duration-300"
+                  >
+                    {item.name}
+                  </Link>
+                )
+            )}
           </div>
         </div>
       </div>
 
-      <DisclosurePanel className="lg:hidden bg-blue-700 rounded-xl">
-        <div className="space-y-1 px-2 pb-3 pt-2">
-          {navigation.map((item) => (
-
-            
-            <DisclosureButton
-              key={item.name}
-              as="a"
-              href={item.target}
-              aria-current={item.current ? "page" : undefined}
-              className={classNames(
-                item.current
-                  ? " text-white"
-                  : "text-gray-300 ",
-                "block rounded-md px-3 py-2 text-base font-medium text-center"
-              )}>
-              {item.name}
-            </DisclosureButton>
-          ))}
-        </div>
+      {/* Mobile Panel */}
+      <DisclosurePanel className="lg:hidden bg-blue-900/95 backdrop-blur-lg h-screen w-full px-6 pt-10 space-y-4">
+        {navigation.map(
+          (item) =>
+            item.visible && (
+              <DisclosureButton
+                key={item.name}
+                as="a"
+                href={item.target}
+                className="block text-center text-xl text-white font-medium hover:text-indigo-300 transition-colors duration-200"
+              >
+                {item.name}
+              </DisclosureButton>
+            )
+        )}
+        {user && (
+          <button
+            onClick={clickLogOut}
+            className="mt-8 w-full text-center text-indigo-400 hover:text-white font-semibold"
+          >
+            Log Out
+          </button>
+        )}
       </DisclosurePanel>
     </Disclosure>
   );

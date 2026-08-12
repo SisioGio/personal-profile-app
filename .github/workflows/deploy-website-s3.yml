@@ -1,12 +1,11 @@
 name: Deploy Website to S3
 
-# Pushes to this workflow file trigger a fresh website deployment.
-
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+      
     paths:
       - public/**
       - src/**
@@ -30,7 +29,6 @@ jobs:
     env:
       AWS_REGION: ${{ vars.AWS_REGION || 'eu-central-1' }}
       S3_BUCKET: alessiogiovannini.com
-      CLOUDFRONT_DISTRIBUTION_ID: ECO9DN47TEDP
       REACT_APP_BEDROCK_ENDPOINT: ${{ vars.REACT_APP_BEDROCK_ENDPOINT || 'https://664xui6bqd.execute-api.eu-central-1.amazonaws.com' }}
 
     steps:
@@ -73,9 +71,3 @@ jobs:
             --include "index.html" \
             --include "asset-manifest.json" \
             --include "manifest.json"
-
-      - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
-            --paths "/*"

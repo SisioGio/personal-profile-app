@@ -85,13 +85,7 @@ function Services() {
       default_prompt:
         "Create a meal or meal plan based on the given data/preferences.",
     },
-    // {
-    //   name: "Document Summarization",
-    //   description:
-    //     "Summarize lengthy articles, reports, or documents into concise, easy-to-read overviews using our advanced AI summarizer.",
-    //   role_description: "A professional layer",
-    //   task: "Help people with summarizing documents in different languages",
-    // },
+  
     {
       name: "Ethereal",
       input: [

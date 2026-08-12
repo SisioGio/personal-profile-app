@@ -1,58 +1,100 @@
 import React from "react";
 import Fade from "react-reveal/Fade";
+import {
+  HiOutlineCpuChip,
+  HiOutlineChatBubbleBottomCenterText,
+  HiOutlineCloud,
+  HiOutlineDocumentMagnifyingGlass,
+  HiOutlineServer,
+  HiOutlineSparkles,
+} from "react-icons/hi2";
+
 const services = [
   {
-    title: "Process Automation",
-    fade_direction: "top",
+    title: "AI LLM & Knowledge Bases",
     description:
-      "Harnessing top RPA technologies like UiPath and AWS, I excel in designing seamless, fully automated processes. My approach transforms complex workflows into efficient, error-free systems, boosting productivity and integration across platforms. From tailored automation solutions to real-time insights with Power BI, I deliver innovation that drives operational excellence.",
-    imageUrl:
-      "https://tailus.io/sources/blocks/end-image/preview/images/graphic.svg",
+      "Designing intelligent systems powered by Large Language Models (LLMs) that understand organizational context. I build domain-specific knowledge bases, enabling retrieval-augmented generation (RAG) for smarter, context-aware AI responses.",
+    icon: <HiOutlineCpuChip size={50} className="text-indigo-400" />,
   },
   {
-    title: "Digitalization",
-    fade_direction: "right",
+    title: "AI Document Intelligence",
     description:
-      "Specializing in digital transformation within the 365 environment, I leverage tools like Power Automate, Power Apps, and SharePoint to drive innovation and efficiency. My solutions streamline processes, enhance collaboration, and automate workflows, transforming traditional operations into agile, data-driven systems.",
-    imageUrl:
-      "https://tailus.io/sources/blocks/end-image/preview/images/ui-design.svg",
+      "Building document extraction pipelines using LLMs for OCR, entity recognition, and semantic search. Transform unstructured data into actionable knowledge using advanced embeddings and vector databases.",
+    icon: <HiOutlineDocumentMagnifyingGlass size={50} className="text-indigo-400" />,
   },
   {
-    title: "GenAi Integration",
-    fade_direction: "left",
+    title: "Conversational Agents & Bedrock",
     description:
-      "Leveraging GenAi, I enhance robotic software to make rule-based processes smarter and more adaptive. By integrating advanced AI capabilities, I optimize automation, enabling systems to learn, predict, and evolve. This fusion transforms traditional RPA into intelligent, decision-making solutions.",
-    imageUrl:
-      "https://tailus.io/sources/blocks/end-image/preview/images/ux-design.svg",
+      "Developing agent systems with AWS Bedrock — orchestrating specialized AI agents that collaborate intelligently across tasks like data retrieval, reasoning, and user engagement.",
+    icon: <HiOutlineSparkles size={50} className="text-indigo-400" />,
+  },
+  {
+    title: "Chatbots for Microsoft Teams",
+    description:
+      "Integrating conversational AI directly within Teams. Empowering users to interact with internal data, automate workflows, and retrieve documents via natural dialogue — securely and in real time.",
+    icon: <HiOutlineChatBubbleBottomCenterText size={50} className="text-indigo-400" />,
+  },
+  {
+    title: "Automation & Cloud Integration",
+    description:
+      "Connecting AI workflows with RPA, Power Automate, and AWS Lambda for seamless orchestration. Automate decision-making and data flows with intelligent, serverless backend systems.",
+    icon: <HiOutlineCloud size={50} className="text-indigo-400" />,
+  },
+  {
+    title: "Enterprise AI Infrastructure",
+    description:
+      "Architecting scalable AI solutions using vector databases, API gateways, and microservices. Secure deployment and monitoring pipelines ensure compliance and reliability in production environments.",
+    icon: <HiOutlineServer size={50} className="text-indigo-400" />,
   },
 ];
-const Expertise = () => (
-  <div className="bg-white " id="expertise">
-  <Fade top>
-    <h3 className="text-blue-900 text-center font-semibold text-2xl sm:text-3xl lg:text-4xl xl:text-5xl py-10 sm:py-16">
-      Areas of Expertise
-    </h3>
-  </Fade>
 
-  <div className="container mx-auto px-3 md:px-6 lg:px-12">
-    <div className="mx-auto grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 pb-10 sm:pb-20">
-      {services.map((service, index) => (
-        <Fade bottom distance="200px" key={index}>
-          <div className="rounded-2xl shadow-lg px-4 py-6 sm:px-6 lg:px-8 border-2 border-indigo-200 bg-gradient-to-r from-white to-indigo-50 hover:from-indigo-50 hover:to-white transition-transform hover:scale-105">
-            <div className="space-y-4 text-center">
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-indigo-900 hover:text-indigo-700 transition-colors duration-200">
+const Expertise = () => (
+  <section className=" py-20 relative" id="expertise">
+    <Fade top>
+      <h3 className="text-center font-semibold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300 text-4xl sm:text-5xl lg:text-6xl py-10">
+        AI-Driven Expertise
+      </h3>
+    </Fade>
+ <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-blue-900/70 to-black/90 z-[-1]" />
+
+    {/* Floating light orbs (soft on mobile) */}
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute top-[20%] left-[15%] w-28 h-28 sm:w-40 sm:h-40 bg-cyan-400/20 blur-3xl animate-pulse rounded-full" />
+      <div className="absolute bottom-[20%] right-[10%] w-36 h-36 sm:w-48 sm:h-48 bg-fuchsia-400/20 blur-3xl animate-pulse delay-700 rounded-full" />
+    </div>
+
+
+
+    <div className="container mx-auto px-4 md:px-10 lg:px-20">
+      <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((service, index) => (
+          <Fade bottom distance="200px" key={index}>
+            <div className="relative group rounded-3xl bg-gray-900/50 border border-indigo-500/20 p-8 text-center shadow-xl transition-transform transform hover:scale-105 hover:shadow-indigo-500/20">
+              {/* Icon */}
+              <div className="flex justify-center mb-6 transition-transform group-hover:scale-110">
+                <div className="p-5 bg-indigo-900/30 rounded-2xl border border-indigo-500/20 backdrop-blur-md">
+                  {service.icon}
+                </div>
+              </div>
+
+              {/* Title */}
+              <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-indigo-300 transition-colors">
                 {service.title}
               </h3>
-              <p className="text-base sm:text-lg text-gray-600 tracking-wide leading-relaxed">
+
+              {/* Description */}
+              <p className="text-gray-300 text-base leading-relaxed tracking-wide">
                 {service.description}
               </p>
+
+              {/* Glow Effect */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 blur-xl transition duration-500"></div>
             </div>
-          </div>
-        </Fade>
-      ))}
+          </Fade>
+        ))}
+      </div>
     </div>
-  </div>
-</div>
+  </section>
 );
 
 export default Expertise;

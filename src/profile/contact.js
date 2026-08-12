@@ -101,7 +101,9 @@ return (
                 in touch</h1>
         </div>
         
-        <div class="relative flex items-top justify-center   dark:bg-gray-900 sm:items-center sm:pt-0">
+        <div class="relative flex items-top justify-center    sm:items-center sm:pt-0">
+
+
   <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
       <div class="mt-2 overflow-hidden">
           <div class="grid grid-cols-1 md:grid-cols-2">
@@ -187,7 +189,7 @@ return (
              
             </div>
             <hr class="border-gray-600"/>
-            <p class="w-full text-center my-5 text-gray-600">Copyright © 2024 Alessio Giovannini</p>
+            <p class="w-full text-center my-5 text-gray-600">Copyright © {new Date().getFullYear()} Alessio Giovannini</p>
         </div>
     </div>
 </div>

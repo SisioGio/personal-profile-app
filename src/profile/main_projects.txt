@@ -1,0 +1,31 @@
+Invoice Processing(aws,LLM,Api,Prompting, RPA,UiPath)
+
+
+ Delivery Notes processing (aws,LLM,Api,Prompting, RPA), 
+ 
+ Knowledge bases (LLM, Bedrock, Document Processing), 
+ 
+ SAP Automations (RPA,Power Automate)
+ Reporting automations (RPA,Power Automate, SQL) 
+ 
+ 
+ AI GALLERY (vsvision.storaroart.com, AI gallery created based on historical data extracted from books and video of Vittorio Storaro and create a database from the unstrcutrue data, cloned his voice  and created a short presentation script
+
+ Email Marketing Generator: Combinated Bedrock and Perplexity APIs to generate super personalized email marketing campains based on input file (emailifit.com)
+ Archintel ( internal tool to fill PDF forms of architects by uploading the input documents)
+
+ Automated bnb checkin: Automated BNB checkin for new guess, handle data upload, face verification, document verification data extraction and file prepared for the italian portal
+
+ Customer service agent: Customer service agent for US rental scooter handling incoming calls, done using LiveKit and Bedrock Nova Sonic, Python.
+
+ Platform for s2s agents: www.agents4people.com
+
+ Data document extraction with LLM: docaiextractor.com (Show case power of LLM extraction with a scomposed process PDF -> TEXT -> TRANSFORMATION TEXT -> PROMPT ENRICHMENT -> LLM) used Bedrock, Textract, Dynamo db, lambdas, api, authentication, payment processing.
+
+
+NFT Project https://opensea.io/collection/greengangpumpkins/traits etherscan contract: https://etherscan.io/address/0x48a00fbcc609e145a3f639764ce8d9d5ee6858d5#code
+    Project: https://opensea.io/collection/storaroart contract developed and deployed by myself: https://etherscan.io/address/0x0aae9b5ec79c02059d08472a14453832c9ba6067#code
+
+    Nfts projects were done using Solidty, Developed and Compiled thoruhg remix and publish to eth blockchain.
+    Responsible for contract development, contract logic design, deployment, algoritmticaly create collections of items by providing the right rarety to the traits.
+

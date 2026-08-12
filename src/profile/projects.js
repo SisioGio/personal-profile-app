@@ -1,100 +1,147 @@
-import React, { useState } from "react";
+import React from "react";
 import Fade from "react-reveal/Fade";
-const technologies = {
-  UiPath: "bg-blue-600", // Slightly darker blue
-  DU: "bg-red-500", // Slightly darker red
-  SharePoint: "bg-green-700", // Slightly darker green
-  BAPI: "bg-indigo-700", // Slightly lighter indigo
-  PA: "bg-orange-500", // Slightly lighter orange
-  AWS: "bg-yellow-600", // Slightly darker yellow
-  IaC: "bg-purple-700", // Darker purple
-  PowerBI: "bg-teal-700", // Darker teal
-  Approvals: "bg-pink-600", // Darker pink
-  365: "bg-gray-700", // Darker gray
-  GenAi: "bg-cyan-600", // Slightly darker cyan
-};
+import { ArrowTopRightOnSquareIcon, CodeBracketIcon, SparklesIcon } from "@heroicons/react/24/outline";
+
 const projects = [
   {
-    title: "PO Invoices Automation",
+  title: "Document Processing Automation",
+  description:
+    "End-to-end document understanding system for invoices and delivery notes, combining AWS Lambda, Bedrock, LLMs, and UiPath. Leveraging prompt engineering and generative AI, it extracts, validates, and posts data automatically with over 95% accuracy while keeping costs minimal.",
+  technologies: ["AWS", "LLM", "RPA", "UiPath", "APIGateway", "Prompting", "Generative AI"],
+
+},
+  {
+    title: "Knowledge Bases AI",
     description:
-      "Implemented automation for processing PO invoices using UiPath, Document Understanding, and AWS GenAI integration. This solution performs all the required checks before posting the final document:  VAT, vendor, extraction, payment details, and missing GRs. GenAI enhanced UiPath extraction accuracy through prompt engineering, optimizing PDF data extraction.",
-    technologies: ["UiPath", "DU", "SharePoint", "BAPI", "GenAi"],
+      "Built knowledge retrieval systems using AWS Bedrock and LLMs for document processing, embedding generation, and dynamic Q&A. Enables intelligent context retrieval from large unstructured datasets.",
+    technologies: ["LLM", "Bedrock", "DocProcessing"],
   },
   {
-    title: "Journal Entries Automation",
+    title: "SAP Automations",
     description:
-      "Automated the finance team's Journal Entries process, successfully processing and approving over 500,000 entries. Integrated with SharePoint, Power Automate, and Power Apps, the solution manages the entire request lifecycle, including necessary approvals.",
-    technologies: ["UiPath", "SharePoint", "PA"],
+      "Developed RPA bots and Power Automate workflows for SAP finance operations — journal entries, purchase orders, and approval chains — increasing speed and reducing manual work.",
+    technologies: ["RPA", "PowerAutomate", "SAP"],
   },
   {
-    title: "IC Back Charges Invoices Automation",
+    title: "Reporting Automations",
     description:
-      "Digitized and automated over 15,000 IC back charge invoices. The process includes request management via SharePoint/Power Automate, posting in SAP, and PDF file creation.",
-    technologies: ["UiPath", "PA", "SharePoint"],
+      "Automated financial and operational reports using RPA, SQL, and Power Automate. Enabled continuous insights without manual intervention.",
+    technologies: ["RPA", "SQL", "PowerAutomate"],
   },
   {
-    title: "Fixed Assets Workflow Automation",
+    title: "AI Gallery — Storaro Art",
     description:
-      "Digitized the fixed asset request process by creating a custom SharePoint list integrated with Power Apps and Power Automate. This new solution replaces the email-based process, ensuring proper approval and access management.",
-    technologies: ["UiPath", "PA", "SharePoint"],
+      "Developed an AI art gallery (vsvision.storaroart.com) that reconstructs Vittorio Storaro’s creative vision. Extracted text & visuals from books and videos, created a structured knowledge base, cloned his voice, and generated an AI presentation.",
+    technologies: ["AI", "Vision", "LLM", "Text2Speech"],
+    link: "https://vsvision.storaroart.com",
   },
   {
-    title: "Automated Monthly Reports",
+    title: "Email Marketing Generator",
     description:
-      "Automated the generation of monthly reports for the reporting and finance teams, enhancing data accessibility and report frequency.",
-    technologies: ["UiPath", "SharePoint"],
+      "Combined Bedrock and Perplexity APIs to generate hyper-personalized marketing campaigns from input data files. Powers emailifit.com with tailored copywriting automation.",
+    technologies: ["Bedrock", "Perplexity", "API"],
+    link: "https://emailifit.com",
   },
   {
-    title: "GenAi Integration",
+    title: "Archintel — Document PDF Automation",
     description:
-      "Integrated GenAi to existing RPA solution by creating a serverless application that communicates with AWS and enables the interaction between Bedrock and UiPath",
-    technologies: ["UiPath", "AWS", "IaC"],
+      "Internal tool for architects — automatically fills PDF forms from uploaded documents using LLM-driven field mapping and validation.",
+    technologies: ["LLM", "PDF", "Automation"],
+  },
+  {
+    title: "Automated BNB Check-in",
+    description:
+      "Fully automated guest onboarding process including document upload, face verification, and data preparation for Italian compliance systems.",
+    technologies: ["AI", "Vision", "Verification"],
+  },
+  {
+    title: "Customer Service Agent",
+    description:
+      "Voice-based customer service agent for US scooter rentals, developed using LiveKit, Bedrock Nova Sonic, and Python to handle natural call interactions.",
+    technologies: ["Bedrock", "NovaSonic", "VoiceAI", "Python"],
+  },
+  {
+    title: "Platform for AI Agents",
+    description:
+      "Built Agents4People (www.agents4people.com), a modular platform for hosting AI-powered task-specific agents with secure authentication and API orchestration.",
+    technologies: ["LLM", "Bedrock", "WebApp"],
+    link: "https://www.agents4people.com",
+  },
+  {
+    title: "Document Extraction with LLM",
+    description:
+      "Created Docaiextractor.com to showcase multi-step LLM extraction (PDF → Text → Transformation → Prompt Enrichment → LLM). Stack includes Bedrock, Textract, DynamoDB, Lambda, API, and integrated payment processing.",
+    technologies: ["Bedrock", "Textract", "Lambda", "LLM", "Payments"],
+    link: "https://docaiextractor.com",
+  },
+  {
+    title: "NFT Collections",
+    description:
+      "Developed and deployed Ethereum NFT collections (StoraroArt, GreenGangPumpkins). Designed Solidity contracts, rarity algorithms, and full deployment via Remix to mainnet.",
+    technologies: ["Solidity", "NFT", "Blockchain", "Remix"],
+    link: [{"label":"Storaro Art NFT",'url':"https://opensea.io/collection/storaroart"},{"label":"GreenGangPumpkins NFT",'url':"https://opensea.io/collection/greengangpumpkins"}],
   },
 ];
 
 const Projects = () => {
   return (
-    <div className="bg-white -mt-1" id="projects">
-      <div className="h-12"></div>
-      <div className="w-full md:w-5/6  mx-auto p-4 md:p-6 lg:p-8">
-        <Fade top distance="300px">
-          <h2 className="text-center text-blue-900 text-3xl sm:text-4xl lg:text-5xl xl:text-6xl py-10 sm:py-16">
-            My Projects
-          </h2>
-        </Fade>
+    <div id="projects" className="relative py-20 bg-transparent">
+      {/* Section Title */}
+      <h2 className="text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400 font-semibold text-4xl sm:text-5xl lg:text-6xl mb-12">
+        My Projects
+      </h2>
 
-        <Fade left>
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
-            {projects.map((experience, index) => (
-              <div
-                key={index}
-                className="rounded-lg shadow-lg p-6 sm:p-8 bg-gradient-to-r from-white via-indigo-50 to-gray-50 border border-indigo-200 flex flex-col gap-4 transition-transform hover:scale-105 hover:shadow-2xl"
-              >
-                <h3 className="font-bold text-xl sm:text-2xl lg:text-3xl text-indigo-900 transition-colors hover:text-indigo-700">
-                  {experience.title}
+      {/* Projects Grid */}
+      <div className="container mx-auto px-5 sm:px-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
+        {projects.map((project, index) => (
+          <Fade key={index} bottom duration={800} distance="20px">
+            <div className="group relative backdrop-blur-xl bg-white/5 border border-cyan-400/20 hover:border-cyan-400/60 rounded-3xl p-6 flex flex-col transition-transform duration-500 hover:scale-[1.03] hover:shadow-[0_0_30px_-5px_rgba(56,189,248,0.4)]">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-cyan-300 text-lg sm:text-xl font-semibold group-hover:text-cyan-400 transition-colors">
+                  {project.title}
                 </h3>
-
-                <p className="mt-2 text-gray-600 leading-relaxed text-base lg:text-lg flex-grow">
-                  {experience.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 sm:gap-3 mt-auto">
-                  {experience.technologies.map((tech, i) => (
-                    <small
-                      key={i}
-                      className={`${technologies[tech]} py-1 px-3 sm:py-1.5 sm:px-4 rounded-full text-white font-semibold text-xs sm:text-sm lg:text-base transition-colors duration-200`}
-                    >
-                      {tech}
-                    </small>
-                  ))}
-                </div>
+                <SparklesIcon className="h-5 w-5 text-fuchsia-400 opacity-70 group-hover:opacity-100 transition" />
               </div>
-            ))}
-          </div>
-        </Fade>
-      </div>
 
-      <div className="h-24"></div>
+              {/* Description */}
+              <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-4">
+                {project.description}
+              </p>
+
+              {/* Technologies */}
+              <div className="flex flex-wrap gap-2 mt-auto mb-4">
+                {project.technologies.map((tech, i) => (
+                  <span
+                    key={i}
+                    className="text-xs font-medium text-white bg-gradient-to-r from-cyan-600 to-indigo-700 px-3 py-1 rounded-full shadow-[0_0_10px_rgba(56,189,248,0.3)]"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              {/* Link */}
+              {project.link && (
+                <a
+                  href={typeof project.link === "string" ? project.link : project.link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm text-cyan-300 hover:text-cyan-400 transition-colors"
+                >
+                  <ArrowTopRightOnSquareIcon className="h-4 w-4 mr-1" />
+                  {typeof project.link === "string"
+                    ? "View Project"
+                    : project.link.label || "View Project"}
+                </a>
+              )}
+
+              {/* Glow */}
+              <div className="absolute inset-0 -z-10 bg-gradient-to-r from-cyan-500/10 via-indigo-500/10 to-fuchsia-500/10 opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-700"></div>
+            </div>
+          </Fade>
+        ))}
+      </div>
     </div>
   );
 };
