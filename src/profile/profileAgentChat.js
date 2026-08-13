@@ -25,7 +25,6 @@ const ProfileAgentChat = () => {
   ]);
 
   const quickPrompts = [
-    "What is Alessio building at N26?",
     "Summarize Alessio's AI and backend skills.",
     "Which projects match his CV?",
   ];
