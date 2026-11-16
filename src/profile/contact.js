@@ -41,16 +41,16 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="border-t border-line bg-accent py-24 text-paper sm:py-32">
+    <section id="contact" className="border-t border-line bg-surface py-24 text-ink sm:py-32">
       <div className="wrap">
-        <p className="eyebrow !text-paper/70">Contact</p>
+        <p className="eyebrow !text-muted">Contact</p>
         <h2 className="mt-4 font-display text-[clamp(3.25rem,9vw,7.5rem)] leading-[0.95] tracking-tight">
           Let&apos;s talk.
         </h2>
 
         <div className="mt-16 grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
-            <p className="max-w-md text-lg leading-relaxed text-paper/70">
+            <p className="max-w-md text-lg leading-relaxed text-muted">
               Hiring for automation, document AI or an AI agent? Write to me or
               leave your details and I will get back to you.
             </p>
@@ -63,9 +63,9 @@ const Contact = () => {
                   alessiogiovannini23@gmail.com
                 </a>
               </li>
-              <li className="text-paper/70">Barcelona, Spain</li>
+              <li className="text-muted">Barcelona, Spain</li>
               <li>
-                <a href="tel:+34675212039" className="link-draw text-paper/70 hover:text-paper">
+                <a href="tel:+34675212039" className="link-draw text-muted hover:text-ink">
                   +34 675 212 039
                 </a>
               </li>
@@ -74,7 +74,7 @@ const Contact = () => {
 
           <form onSubmit={sendEmail} className="space-y-5 text-ink">
             <div>
-              <label htmlFor="name" className="text-sm text-paper/70">
+              <label htmlFor="name" className="text-sm text-muted">
                 Full name
               </label>
               <input
@@ -89,7 +89,7 @@ const Contact = () => {
               />
             </div>
             <div>
-              <label htmlFor="email" className="text-sm text-paper/70">
+              <label htmlFor="email" className="text-sm text-muted">
                 Email
               </label>
               <input
@@ -104,7 +104,7 @@ const Contact = () => {
               />
             </div>
             <div>
-              <label htmlFor="tel" className="text-sm text-paper/70">
+              <label htmlFor="tel" className="text-sm text-muted">
                 Phone number
               </label>
               <input
@@ -121,32 +121,32 @@ const Contact = () => {
             <button
               type="submit"
               disabled={sending}
-              className="btn w-full bg-paper text-ink hover:bg-ink hover:text-paper disabled:opacity-60 sm:w-auto"
+              className="btn w-full bg-accent text-paper hover:bg-ink disabled:opacity-60 sm:w-auto"
             >
               {sending ? "Sending..." : "Send message"}
             </button>
 
             {message && (
-              <p role="status" className="text-base text-paper">
+              <p role="status" className="text-base text-ink">
                 {message}
               </p>
             )}
             {error && (
-              <p role="alert" className="text-base text-[#5B1A04]">
+              <p role="alert" className="text-base text-[#FCA5A5]">
                 {error}
               </p>
             )}
           </form>
         </div>
 
-        <footer className="mt-24 flex flex-col gap-6 border-t border-paper/20 pt-8 text-sm text-paper/60 sm:flex-row sm:items-center sm:justify-between">
+        <footer className="mt-24 flex flex-col gap-6 border-t border-line pt-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Alessio Giovannini</p>
           <nav aria-label="Footer" className="flex flex-wrap gap-x-6">
             {links.map((l) => (
               <a
                 key={l.name}
                 href={l.href}
-                className="link-draw inline-flex min-h-[44px] items-center hover:text-paper"
+                className="link-draw inline-flex min-h-[44px] items-center hover:text-ink"
               >
                 {l.name}
               </a>

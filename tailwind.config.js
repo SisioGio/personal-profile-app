@@ -4,13 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        paper: "#07090D",
-        surface: "#0D1117",
-        ink: "#EAF0F7",
-        muted: "#8B97A8",
-        line: "#1C2430",
-        accent: "#C6F432",
-        "accent-dark": "#A3D11A",
+        paper: "#0A0F1A",
+        surface: "#0F1626",
+        ink: "#F1F5F9",
+        muted: "#94A3B8",
+        line: "#1E2A3F",
+        accent: "#F5A524",
+        "accent-dark": "#D98E12",
       },
       fontFamily: {
         display: ['"Bricolage Grotesque"', "Inter", "sans-serif"],

@@ -26,7 +26,7 @@ const enter = (delay) => ({
 });
 
 const Pipeline = () => (
-  <div className="relative overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_30px_80px_-30px_rgba(198,244,50,0.18)]">
+  <div className="relative overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_30px_80px_-30px_rgba(245,165,36,0.18)]">
     <div className="flex items-center gap-2 border-b border-line px-4 py-3">
       <span className="h-2.5 w-2.5 rounded-full bg-line" />
       <span className="h-2.5 w-2.5 rounded-full bg-line" />
