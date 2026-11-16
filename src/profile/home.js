@@ -1,58 +1,74 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+// Every figure below comes from the CV section.
+const facts = [
+  { value: "95%", label: "lower UiPath AI Unit cost on document processing" },
+  { value: "90%+", label: "of delivery notes posted with no manual step" },
+  { value: "80k+", label: "engineering documents behind one RAG knowledge base" },
+  { value: "500k+", label: "journal entries automated through SAP and UiPath" },
+];
+
+const enter = (delay) => ({
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
+});
+
 const Home = () => (
   <section
     id="home"
-    className="relative w-full h-screen overflow-hidden flex items-center justify-center text-center"
+    className="flex min-h-screen items-center pt-24 pb-12"
   >
-    <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-blue-950/70 to-black/90 z-[-1]" />
+    <div className="wrap grid items-center gap-14 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
+      <div>
+        <motion.p {...enter(0)} className="eyebrow flex items-center gap-3">
+          <span className="pulse-dot h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
+          Barcelona · RPA Developer at N26
+        </motion.p>
 
-    <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute top-[25%] left-[15%] w-32 h-32 sm:w-44 sm:h-44 bg-cyan-400/20 blur-3xl animate-pulse rounded-full" />
-      <div className="absolute bottom-[20%] right-[10%] w-40 h-40 sm:w-52 sm:h-52 bg-fuchsia-400/25 blur-3xl animate-pulse delay-500 rounded-full" />
-    </div>
+        <motion.h1
+          {...enter(0.1)}
+          className="mt-6 font-display text-[clamp(3.25rem,8.5vw,7rem)] leading-[0.95] tracking-tight"
+        >
+          Alessio Giovannini.
+          <span className="mt-3 block text-[0.52em] leading-[1.05] text-muted">
+            RPA, AI and backend developer.
+          </span>
+        </motion.h1>
 
-    <div className="relative px-6 sm:px-10 max-w-4xl flex flex-col items-center">
-      <motion.h1
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="text-white font-extrabold leading-tight text-[clamp(2rem,6vw,4.5rem)]"
+        <motion.p {...enter(0.2)} className="mt-8 max-w-xl text-lg leading-relaxed text-muted">
+          I build document processing, RAG and AI agents on AWS Bedrock, and
+          connect them to the finance and banking processes that run on UiPath
+          and SAP. 5+ years, from the first bot to production.
+        </motion.p>
+
+        <motion.div {...enter(0.3)} className="mt-10 flex flex-wrap gap-4">
+          <a href="#projects" className="btn btn-solid">
+            See my projects
+          </a>
+          <a href="#contact" className="btn btn-line">
+            Send a message
+          </a>
+        </motion.div>
+      </div>
+
+      <motion.dl
+        {...enter(0.4)}
+        className="grid grid-cols-2 border-l border-t border-line"
       >
-        <span className="block text-white/90 text-[clamp(1.2rem,3vw,1.75rem)] font-light mb-2">
-          Hey there, I'm
-        </span>
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400 drop-shadow-lg">
-          Alessio Giovannini
-        </span>
-        <br />
-        <span className="text-white/80 text-[clamp(1rem,3vw,1.75rem)] mt-3 block font-medium">
-          RPA / AI / Backend Developer building reliable automation and applied AI systems.
-        </span>
-      </motion.h1>
-
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 1 }}
-        className="text-white/80 text-[clamp(1rem,2.5vw,1.25rem)] mt-6 leading-relaxed tracking-wide max-w-2xl"
-      >
-        I bring 5+ years of experience across automation, backend services,
-        document intelligence, RAG, AI agents, AWS Bedrock, and
-        Python/JavaScript systems that connect prototypes to real business
-        processes.
-      </motion.p>
-
-      <motion.a
-        href="#projects"
-        initial={{ opacity: 0, scale: 0.85 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1.3, duration: 0.8 }}
-        className="mt-10 inline-block bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-white font-semibold px-10 py-4 rounded-full shadow-lg hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] hover:scale-105 transition-all text-[clamp(1rem,2.5vw,1.25rem)]"
-      >
-        Explore My Work
-      </motion.a>
+        {facts.map((f) => (
+          <div
+            key={f.value}
+            className="border-b border-r border-line p-6 transition duration-200 hover:bg-surface sm:p-8"
+          >
+            <dt className="font-display text-5xl leading-none text-accent sm:text-6xl">
+              {f.value}
+            </dt>
+            <dd className="mt-4 text-sm leading-snug text-muted">{f.label}</dd>
+          </div>
+        ))}
+      </motion.dl>
     </div>
   </section>
 );
