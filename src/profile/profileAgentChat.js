@@ -103,14 +103,14 @@ const ProfileAgentChat = () => {
           style={{ height: chatHeight || "calc(100svh - 1.5rem)" }}
         >
           <div className="relative overflow-hidden border-b border-white/10 bg-slate-950 px-4 pb-4 pt-4">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.28),transparent_36%),radial-gradient(circle_at_85%_10%,rgba(56,189,248,0.18),transparent_38%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(198,244,50,0.22),transparent_36%),radial-gradient(circle_at_85%_10%,rgba(163,209,26,0.14),transparent_38%)]" />
             <div className="relative flex items-start justify-between gap-3">
               <div className="flex min-w-0 items-center gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-300 text-slate-950 shadow-lg shadow-cyan-950/30">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-lime-300 text-slate-950 shadow-lg shadow-lime-950/30">
                   <FaRobot size={20} />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-lime-200">
                     Profile assistant
                   </p>
                   <h2 className="truncate text-xl font-semibold leading-tight">
@@ -121,7 +121,7 @@ const ProfileAgentChat = () => {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-200"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-lime-200"
                 aria-label="Close assistant"
               >
                 <FaTimes size={16} />
@@ -134,7 +134,7 @@ const ProfileAgentChat = () => {
                   key={prompt}
                   type="button"
                   onClick={() => setInputMessage(prompt)}
-                  className="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-left text-xs font-medium text-cyan-50 transition hover:bg-white/15"
+                  className="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-2 text-left text-xs font-medium text-lime-50 transition hover:bg-white/15"
                 >
                   {prompt}
                 </button>
@@ -151,7 +151,7 @@ const ProfileAgentChat = () => {
                 }`}
               >
                 {msg.role !== "user" && (
-                  <div className="mb-1 hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-950 text-cyan-200 shadow-sm min-[380px]:flex">
+                  <div className="mb-1 hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-950 text-lime-200 shadow-sm min-[380px]:flex">
                     <FaRobot size={14} />
                   </div>
                 )}
@@ -169,7 +169,7 @@ const ProfileAgentChat = () => {
 
             {loading && (
               <div className="mb-3 flex items-end gap-2">
-                <div className="mb-1 hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-950 text-cyan-200 shadow-sm min-[380px]:flex">
+                <div className="mb-1 hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-950 text-lime-200 shadow-sm min-[380px]:flex">
                   <FaRobot size={14} />
                 </div>
                 <div className="rounded-[22px] rounded-bl-md border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 shadow-sm">
@@ -199,7 +199,7 @@ const ProfileAgentChat = () => {
               <button
                 type="submit"
                 disabled={loading || !inputMessage.trim()}
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-950/20 transition hover:bg-cyan-400 disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-lime-500 text-slate-950 shadow-lg shadow-lime-950/20 transition hover:bg-lime-400 disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none"
                 aria-label="Send message"
               >
                 <FaPaperPlane size={15} />
@@ -213,7 +213,7 @@ const ProfileAgentChat = () => {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex h-16 w-16 items-center justify-center rounded-full border border-white/40 bg-cyan-400 text-slate-950 shadow-[0_18px_48px_rgba(8,145,178,0.45)] transition hover:bg-cyan-300 focus:outline-none focus:ring-4 focus:ring-cyan-200/60"
+          className="flex h-16 w-16 items-center justify-center rounded-full border border-white/40 bg-lime-400 text-slate-950 shadow-[0_18px_48px_rgba(8,145,178,0.45)] transition hover:bg-lime-300 focus:outline-none focus:ring-4 focus:ring-lime-200/60"
           aria-label="Open assistant"
         >
           <FaComments size={24} />
