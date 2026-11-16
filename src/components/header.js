@@ -6,6 +6,11 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "./userContext";
+import { Link } from "react-router-dom";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export default function Navbar() {
   const { user, logoutUser } = useContext(UserContext);
@@ -16,85 +21,109 @@ export default function Navbar() {
   };
 
   const navigation = [
-    { name: "Experience", target: "#CV" },
-    { name: "Projects", target: "#projects" },
-    { name: "Skills", target: "#familiarities" },
-    { name: "About", target: "#about" },
-    { name: "Contact", target: "#contact" },
+    { name: "Home", target: "#home", visible: true },
+    { name: "Expertise", target: "#expertise", visible: true },
+    { name: "Familiarities", target: "#familiarities", visible: true },
+    { name: "Projects", target: "#projects", visible: true },
+     { name: "Certifications", target: "#certifications", visible: true },
+    
+    { name: "About Me", target: "#about", visible: true },
+    { name: "CV", target: "#CV", visible: true },
+    { name: "Contact", target: "#contact", visible: true },
   ];
 
-  const [scrolled, setScrolled] = useState(false);
+  const [navbarSolid, setNavbarSolid] = useState(false);
+
+  // Detect scroll and toggle background
+  const handleScroll = () => {
+    const home = document.getElementById("home");
+    if (!home) return;
+    const { bottom } = home.getBoundingClientRect();
+    setNavbarSolid(bottom <= 100);
+  };
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <Disclosure
       as="nav"
-      aria-label="Main"
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${
-        scrolled ? "border-b border-line bg-paper/95 backdrop-blur" : "bg-paper"
+      className={`fixed w-full z-50 transition-all duration-500 ${
+        navbarSolid
+          ? "backdrop-blur-md bg-blue-900/80 shadow-md"
+          : "bg-transparent"
       }`}
     >
-      {({ open }) => (
-        <>
-          <div className="wrap flex h-16 items-center justify-between">
-            <a href="#home" className="font-display text-2xl leading-none">
-              Alessio Giovannini
-            </a>
-
-            <div className="hidden items-center gap-8 lg:flex">
-              {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.target}
-                  className="link-draw inline-flex min-h-[44px] items-center text-sm font-medium text-ink"
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-
-            <DisclosureButton
-              aria-label={open ? "Close menu" : "Open menu"}
-              className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink lg:hidden"
-            >
-              {open ? (
-                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-              )}
+      <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div className="relative flex h-20 items-center justify-between">
+          {/* Mobile menu button */}
+          <div className="absolute inset-y-0 right-0 flex items-center lg:hidden">
+            <DisclosureButton className="group inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-400">
+              <Bars3Icon
+                className="block h-6 w-6 group-data-[open]:hidden"
+                aria-hidden="true"
+              />
+              <XMarkIcon
+                className="hidden h-6 w-6 group-data-[open]:block"
+                aria-hidden="true"
+              />
             </DisclosureButton>
           </div>
 
-          <DisclosurePanel className="h-[calc(100vh-4rem)] border-t border-line bg-paper lg:hidden">
-            <div className="wrap flex flex-col pt-6">
-              {navigation.map((item) => (
-                <DisclosureButton
-                  key={item.name}
-                  as="a"
-                  href={item.target}
-                  className="border-b border-line py-5 font-display text-4xl"
-                >
-                  {item.name}
-                </DisclosureButton>
-              ))}
-              {user && (
-                <button
-                  onClick={clickLogOut}
-                  className="mt-8 min-h-[44px] text-left font-medium text-accent"
-                >
-                  Log out
-                </button>
-              )}
-            </div>
-          </DisclosurePanel>
-        </>
-      )}
+          {/* Brand */}
+          <div className="flex flex-1 items-center justify-center sm:justify-start">
+            <Link
+              to="#home"
+              className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300 font-bold text-2xl md:text-3xl tracking-tight"
+            >
+              Alessio Giovannini
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex lg:space-x-8">
+            {navigation.map(
+              (item) =>
+                item.visible && (
+                  <Link
+                    key={item.name}
+                    to={item.target}
+                    className="text-white text-lg font-light hover:text-indigo-300 transition-colors duration-300"
+                  >
+                    {item.name}
+                  </Link>
+                )
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Panel */}
+      <DisclosurePanel className="lg:hidden bg-blue-900/95 backdrop-blur-lg h-screen w-full px-6 pt-10 space-y-4">
+        {navigation.map(
+          (item) =>
+            item.visible && (
+              <DisclosureButton
+                key={item.name}
+                as="a"
+                href={item.target}
+                className="block text-center text-xl text-white font-medium hover:text-indigo-300 transition-colors duration-200"
+              >
+                {item.name}
+              </DisclosureButton>
+            )
+        )}
+        {user && (
+          <button
+            onClick={clickLogOut}
+            className="mt-8 w-full text-center text-indigo-400 hover:text-white font-semibold"
+          >
+            Log Out
+          </button>
+        )}
+      </DisclosurePanel>
     </Disclosure>
   );
 }
